@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
 from .models import Book
@@ -8,12 +9,18 @@ from .forms import BookForm
 
 
 # Create your views here.
+@login_required
 def index(request):
+	username = None
+	if request.user.is_authenticated:
+		username = request.user.get_username()
+	print(username)
 	book_list = Book.objects.all()
 	form = BookForm()
 	context = {
 		'book_list' : book_list,
-		'form' : form
+		'form' : form,
+		'username' : username,
 	}
 	return render(request, 'tracker/index.html', context)
 
@@ -31,5 +38,5 @@ def login_view(request):
 			return redirect('tracker:index')
 	else:
 		form = AuthenticationForm()
-	return render(request, 'tracker/login.html', {'form': form})
+	return render(request, 'registration/login.html', {'form': form})
 

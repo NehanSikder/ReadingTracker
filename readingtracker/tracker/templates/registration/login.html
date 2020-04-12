@@ -1,6 +1,10 @@
-{% extends 'tracker/base.html' %}
+{% extends '../tracker/base.html' %}
 
 {% block content %}
+	{% if next %}
+	<p>Unable to access page. Please trying logging in again</p>
+	{% endif %}
+
 	<div class="row">
 	    <div class="col-sm">
 	    </div>
@@ -11,10 +15,11 @@
 			  </div>
 			  <div class="card-body">
 				    <div class="form-group">
-				    	<form action="{% url 'tracker:login' %}" method="post">
+				    	<form action="{% url 'login' %}" method="post">
 							{% csrf_token %}
 							{{ form }}
 							<input style="margin-top: 5px" class="btn btn-primary" type="submit" id="login_btn" value="Sign in">
+							<input type="hidden" name="next" value="{{ next }}">
 						</form>
 					</div>
 			  </div>
