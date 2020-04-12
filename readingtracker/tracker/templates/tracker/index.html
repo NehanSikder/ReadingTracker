@@ -22,10 +22,10 @@
 				<div class="card-body">
 					{% if book_list %}
 						<div>
-							<ul>
+							<ul class="list-group list-group-flush">
 						    {% for book in book_list %}
 						    	{% if book.already_read %}
-						        	<li>
+						        	<li class="list-group-item">
 						        		{{ book.name }}
 						        		<a href="deleteBook/{{ book.id }}">Delete</a>
 						        	</li>
@@ -47,10 +47,10 @@
 				<div class="card-body">
 					{% if book_list %}
 						<div>
-							<ul>
+							<ul class="list-group list-group-flush">
 						    {% for book in book_list %}
 						    	{% if book.already_read == False %}
-						        	<li>{{ book.name }}
+						        	<li class="list-group-item">{{ book.name }}
 						        	<a href="deleteBook/{{ book.id }}">Delete</a>
 						        	</li>
 						    	{% endif %}
