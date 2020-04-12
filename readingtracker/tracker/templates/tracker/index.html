@@ -24,8 +24,11 @@
 						<div>
 							<ul>
 						    {% for book in book_list %}
-						    	{% if book.todo == False %}
-						        	<li>{{ book.name }}</li>
+						    	{% if book.already_read %}
+						        	<li>
+						        		{{ book.name }}
+						        		<a href="deleteBook/{{ book.id }}">Delete</a>
+						        	</li>
 						    	{% endif %}
 						    {% endfor %}
 						    </ul>
@@ -46,8 +49,10 @@
 						<div>
 							<ul>
 						    {% for book in book_list %}
-						    	{% if book.todo %}
-						        	<li>{{ book.name }}</li>
+						    	{% if book.already_read == False %}
+						        	<li>{{ book.name }}
+						        	<a href="deleteBook/{{ book.id }}">Delete</a>
+						        	</li>
 						    	{% endif %}
 						    {% endfor %}
 						    </ul>

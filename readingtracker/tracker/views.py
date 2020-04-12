@@ -14,7 +14,6 @@ def index(request):
 	username = None
 	if request.user.is_authenticated:
 		username = request.user.get_username()
-	print(username)
 	book_list = Book.objects.all()
 	form = BookForm()
 	context = {
@@ -28,7 +27,13 @@ def index(request):
 def addBook(request):
 	newBookForm = BookForm(request.POST)
 	if newBookForm.is_valid():
-		new_book = newBookForm.save()
+		new_book = newBookForm.save(commit=False)
+		new_book.user = request.user.get_username()
+		newBookForm.save()
+	return redirect('tracker:index')
+
+def deleteBook(request,pk):
+	Book.objects.filter(id=pk).delete()
 	return redirect('tracker:index')
 
 def login_view(request):
