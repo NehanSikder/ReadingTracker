@@ -1,0 +1,27 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+	<div class="row">
+	    <div class="col-sm">
+	    </div>
+	    <div class="col-sm">
+	      <div class="card" style="width: 18rem;">
+			<div class="card-header">
+			    <h5 class="card-title">Sign in</h5>
+			  </div>
+			  <div class="card-body">
+				    <div class="form-group">
+				    	<form action="{% url 'tracker:login' %}" method="post">
+							{% csrf_token %}
+							{{ form }}
+							<input style="margin-top: 5px" class="btn btn-primary" type="submit" id="login_btn" value="Sign in">
+						</form>
+					</div>
+			  </div>
+			</div>
+	    </div>
+	    <div class="col-sm">
+	    </div>
+  	</div>
+
+{% endblock %}
