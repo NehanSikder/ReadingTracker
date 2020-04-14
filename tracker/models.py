@@ -7,4 +7,4 @@ class Book(models.Model):
 	user = models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.name + " " + str(self.already_read)

@@ -36,6 +36,14 @@ def deleteBook(request,pk):
 	Book.objects.filter(id=pk).delete()
 	return redirect('tracker:index')
 
+def moveBook(request,pk):
+	print(pk)
+	book = Book.objects.get(pk=pk)
+	book.already_read = not book.already_read
+	print(book)
+	book.save()
+	return redirect('tracker:index')
+
 def login_view(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(data=request.POST)
