@@ -3,16 +3,13 @@
 {% block content %}
 	<h1 id="welcome-message">Welcome {{ username }}</h1>
 	<a href="/accounts/logout/">Log Out</a>
-	<div class="row">
-	    <div class="col-sm">
-	    	Add Book
-	    	<form action="{% url 'tracker:addBook' %}" method="post">
-			{% csrf_token %}
-			{{ form }}
-			<input type="submit" id="add_book_btn" value="addBook">
+    	<form action="{% url 'tracker:addBook' %}" method="post">
+    		 <div class="d-flex">
+		    	{% csrf_token %}
+		        {{ form.name }}	
+				<input type="submit" id="add_book_btn" class="btn btn-success" value="Add">
+		    </div>
 		</form>
-	    </div>
-	</div>
 	<div class="row">
 	    <div class="col-sm">
 	    	<div class="card">
@@ -27,8 +24,8 @@
 						    	{% if book.already_read %}
 						        	<li class="list-group-item">
 						        		{{ book.name }}
-						        		<a href="deleteBook/{{ book.id }}">Delete</a>
-						        		<a href="moveBook/{{ book.id }}">To Read</a>
+						        		<a class="text-danger" href="deleteBook/{{ book.id }}">Delete</a>
+						        		<a class="text-success" href="moveBook/{{ book.id }}">To Read</a>
 						        	</li>
 						    	{% endif %}
 						    {% endfor %}
@@ -52,8 +49,8 @@
 						    {% for book in book_list %}
 						    	{% if book.already_read == False %}
 						        	<li class="list-group-item">{{ book.name }}
-						        		<a href="deleteBook/{{ book.id }}">Delete</a>
-					        			<a href="moveBook/{{ book.id }}">Already Read</a>
+						        		<a class="text-danger" href="deleteBook/{{ book.id }}">Delete</a>
+					        			<a class="text-success" href="moveBook/{{ book.id }}">Completed Reading</a>
 						        	</li>
 						    	{% endif %}
 						    {% endfor %}
