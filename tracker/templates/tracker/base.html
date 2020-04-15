@@ -1,11 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<title>Reading Tracker</title>
 </head>
-<body>
-	<div  class="container" style="width: 100%; text-align: center;">
+<!-- <body style="background: url({% static 'images/background.jpg' %}) no-repeat center center fixed; background-size: cover;"> -->
+<body style="background: linear-gradient(#FC7753, white);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative">
+	
+	<div class="container" style="width: 100%; text-align: center; ">
 		{% block content %}
     	{% endblock %}
 	</div>

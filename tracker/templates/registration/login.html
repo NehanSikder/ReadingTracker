@@ -5,25 +5,31 @@
 	<p>Unable to access page. Please trying logging in again</p>
 	{% endif %}
 
-	<div class="row">
+	<div class="row" style="padding: 100px">
 	    <div class="col-sm">
 	    </div>
 	    <div class="col-sm">
-	      <div class="card" style="width: 18rem;">
-			<div class="card-header">
-			    <h5 class="card-title">Sign in</h5>
-			  </div>
-			  <div class="card-body">
-				    <div class="form-group">
-				    	<form action="{% url 'login' %}" method="post">
-							{% csrf_token %}
-							{{ form }}
-							<input style="margin-top: 5px" class="btn btn-primary" type="submit" id="login-btn" value="Sign in">
-							<input type="hidden" name="next" value="{{ next }}">
-						</form>
-					</div>
-			  </div>
-			</div>
+	    	<div class="row-sm-12">
+	    	</div>
+	    	<div class="row-sm-12 my-auto">
+	    		<div class="card mx-auto" style="width: 18rem;">
+					<div class="card-header">
+					    <h5 class="card-title">Sign in</h5>
+				    </div>
+				  	<div class="card-body">
+					    <div class="form-group">
+					    	<form action="{% url 'login' %}" method="post">
+									{% csrf_token %}
+								{{ form }}
+								<input style="margin-top: 5px" class="btn btn-success" type="submit" id="login-btn" value="Sign in">
+								<input type="hidden" name="next" value="{{ next }}">
+							</form>
+						</div>
+				    </div>
+				</div>
+	    	</div>
+	    	<div class="row-sm-12">
+	    	</div>
 	    </div>
 	    <div class="col-sm">
 	    </div>
