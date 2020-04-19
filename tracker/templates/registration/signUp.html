@@ -1,10 +1,6 @@
 {% extends '../tracker/base.html' %}
 
 {% block content %}
-	{% if next %}
-	<p>Unable to access page. Please trying logging in again</p>
-	{% endif %}
-
 	<div class="row" style="padding: 100px">
 	    <div class="col-sm">
 	    </div>
@@ -12,19 +8,16 @@
 	    	<div class="row-sm-12">
 	    	</div>
 	    	<div class="row-sm-12 my-auto">
-			    <h1 class="display-2" style="color: white">Sign In</h5>
-	    		<div class="card mx-auto" style="width: 18rem;">
-					<!-- <div class="card-header">
-				    </div> -->
+			    <h1 class="display-2" style="color: white">Register</h5>
+	    		<div class="card mx-auto" style="width: 54rem;">
 				  	<div class="card-body">
 					    <div class="form-group">
-					    	<form action="{% url 'login' %}" method="post">
-									{% csrf_token %}
+					    	<form action="{% url 'signUp' %}" method="post">
+								{% csrf_token %}
 								{{ form }}
-								<input style="margin-top: 5px" class="btn btn-success" type="submit" id="login-btn" value="Sign in">
+								<input style="margin-top: 5px" class="btn btn-success" type="submit" id="submit-btn" value="Submit">
 								<input type="hidden" name="next" value="{{ next }}">
 							</form>
-							Dont have an account? <a href="{% url 'signUp' %}">Sign Up</a>
 						</div>
 				    </div>
 				</div>
