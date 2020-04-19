@@ -14,7 +14,7 @@ def index(request):
 	username = None
 	if request.user.is_authenticated:
 		username = request.user.get_username()
-	book_list = Book.objects.all()
+	book_list = Book.objects.all().filter(user=username)
 	form = BookForm()
 	context = {
 		'book_list' : book_list,
