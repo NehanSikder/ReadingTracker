@@ -2,19 +2,31 @@
 
 {% block content %}
 	<div class="row" style="padding: 100px">
-	    <div class="col-sm">
+	    <div class="col-sm-2">
 	    </div>
-	    <div class="col-sm">
+	    <div class="col-sm-8">
 	    	<div class="row-sm-12">
 	    	</div>
 	    	<div class="row-sm-12 my-auto">
 			    <h1 class="display-2" style="color: white">Register</h5>
-	    		<div class="card mx-auto" style="width: 54rem;">
+	    		<div class="card mx-auto">
 				  	<div class="card-body">
 					    <div class="form-group">
 					    	<form action="{% url 'signUp' %}" method="post">
 								{% csrf_token %}
-								{{ form }}
+								{% for field in form %}
+							      <p>
+							        {{ field.label_tag }}<br>
+							        {{ field }}
+							        <br>
+							        {% if field.help_text %}
+							          <small style="color: grey">{{ field.help_text }}</small>
+							        {% endif %}
+							        {% for error in field.errors %}
+							          <p style="color: red">{{ error }}</p>
+							        {% endfor %}
+							      </p>
+							    {% endfor %}
 								<input style="margin-top: 5px" class="btn btn-success" type="submit" id="submit-btn" value="Submit">
 								<input type="hidden" name="next" value="{{ next }}">
 							</form>
@@ -25,7 +37,7 @@
 	    	<div class="row-sm-12">
 	    	</div>
 	    </div>
-	    <div class="col-sm">
+	    <div class="col-sm-2">
 	    </div>
   	</div>
 
