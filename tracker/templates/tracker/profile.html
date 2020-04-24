@@ -1,0 +1,31 @@
+{% extends 'tracker/base.html' %}
+
+
+{% block content %}
+<div class="row" style="padding: 100px">
+	    <div class="col-sm-3">
+	    </div>
+	    <div class="col-sm-6">
+	    	<div class="row-sm-12">
+	    	</div>
+	    	<div class="row-sm-12 my-auto">
+			    <h1 class="display-2" style="color: white">Profile</h5>
+	    		<div class="card mx-auto" style="width: 18rem;">
+					<!-- <div class="card-header">
+				    </div> -->
+				  	<div class="card-body">
+				  		<p>
+				  		<label>Username:</label> {{ profile.username }} <br>
+					    <label>Date Joined:</label> {{ profile.date_joined }} <br>
+				  		</p>
+					    <a class="text-danger" href="{% url 'tracker:deleteAccount' %}">Delete Account</a>
+				    </div>
+				</div>
+	    	</div>
+	    	<div class="row-sm-12">
+	    	</div>
+	    </div>
+	    <div class="col-sm-3">
+	    </div>
+  	</div>
+{% endblock %}

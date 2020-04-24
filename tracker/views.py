@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 from .models import Book
 from .forms import BookForm
@@ -22,6 +23,30 @@ def index(request):
 		'username' : username,
 	}
 	return render(request, 'tracker/index.html', context)
+
+@login_required
+def deleteAccount(request):
+	username = None
+	if request.user.is_authenticated:
+		username = request.user.get_username()
+	Book.objects.all().filter(user=username).delete()
+	User.objects.get(username=username).delete()
+	# log out user
+	logout(request)
+	return redirect('/accounts/login/')
+
+
+@login_required
+def displayProfile(request):
+	username = None
+	if request.user.is_authenticated:
+		username = request.user.get_username()
+	# Get profile object using username
+	profile = User.objects.get(username=username)
+	context = {
+		'profile' : profile,
+	}
+	return render(request, 'tracker/profile.html', context)
 
 @require_POST
 def addBook(request):
@@ -52,7 +77,6 @@ def login_view(request):
 	return render(request, 'registration/login.html', {'form': form})
 
 def signUp(request):
-	print(request)
 	if request.method == 'POST':
 		form = UserCreationForm(data=request.POST)
 		if form.is_valid():
