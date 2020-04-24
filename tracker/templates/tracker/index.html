@@ -3,7 +3,7 @@
 
 {% block content %}
 	<h1 class=".display-4" id="welcome-message"  style="color: white;">Welcome {{ username }}</h1>
-	<a href="/accounts/logout/">Log Out</a>
+	<a id="logout" href="/accounts/logout/">Log Out</a>
 	<a href="/profile">Profile</a>
     	<form action="{% url 'tracker:addBook' %}" method="post">
     		 <div class="d-flex" style="padding: 5px;">
