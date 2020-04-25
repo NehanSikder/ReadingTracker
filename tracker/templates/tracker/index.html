@@ -2,7 +2,8 @@
 
 
 {% block content %}
-	<h1 class=".display-4" id="welcome-message"  style="color: white;">Welcome {{ username }}</h1>
+	<h1 class=".display-4" id="welcome-message"  style="color: white; padding-top: 5px">Welcome {{ username }}</h1>
+	<a id="home" class="btn btn-outline-light" href="/">Home</a>
 	<a id="profile" class="btn btn-outline-light" href="/profile">Profile</a>
 	<a id="logout" class="btn btn-outline-light" href="/accounts/logout/">Log Out</a>
     	<form action="{% url 'tracker:addBook' %}" method="post">
