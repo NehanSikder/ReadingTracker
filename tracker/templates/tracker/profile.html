@@ -9,16 +9,19 @@
 	    	<div class="row-sm-12">
 	    	</div>
 	    	<div class="row-sm-12 my-auto">
-			    <h1 class="display-2" style="color: white">Profile</h5>
+			    <h1 class="display-2" style="color: white;">Profile</h5>
 	    		<div class="card mx-auto" style="width: 18rem;">
 					<!-- <div class="card-header">
 				    </div> -->
 				  	<div class="card-body">
 				  		<p>
-				  		<label>Username:</label> {{ profile.username }} <br>
-					    <label>Date Joined:</label> {{ profile.date_joined }} <br>
+				  			<label>Username:</label> 
+				  		{{ profile.username }} <br>
+				  			<label>Date Joined:</label> 	
+					    {{ profile.date_joined }} <br>
 				  		</p>
-					    <a class="text-danger" href="{% url 'tracker:deleteAccount' %}" onclick="return confirm('Are you sure? This will delete all your saved book information.')">Delete Account</a>
+					    <a class="text-danger" href="{% url 'tracker:deleteAccount' %}" onclick="return confirm('Are you sure? This will delete all your saved book information.')">Delete Account</a> <br>
+					    <a style="color: grey;" href="/">Back</a>
 				    </div>
 				</div>
 	    	</div>
