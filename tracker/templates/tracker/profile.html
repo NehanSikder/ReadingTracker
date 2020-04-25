@@ -18,7 +18,7 @@
 				  		<label>Username:</label> {{ profile.username }} <br>
 					    <label>Date Joined:</label> {{ profile.date_joined }} <br>
 				  		</p>
-					    <a class="text-danger" href="{% url 'tracker:deleteAccount' %}">Delete Account</a>
+					    <a class="text-danger" href="{% url 'tracker:deleteAccount' %}" onclick="return confirm('Are you sure? This will delete all your saved book information.')">Delete Account</a>
 				    </div>
 				</div>
 	    	</div>
