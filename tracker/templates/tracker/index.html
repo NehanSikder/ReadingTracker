@@ -1,6 +1,4 @@
 {% extends 'tracker/base.html' %}
-
-
 {% block content %}
 	<h1 class=".display-4" id="welcome-message"  style="color: white; padding-top: 5px">Welcome {{ username }}</h1>
 	<a id="home" class="btn btn-outline-light" href="/">Home</a>
@@ -63,4 +61,10 @@
 			</div>
 	    </div>
 	</div>
+	<h1 class=".display-4" id="dashboard-message"  style="color: white; padding-top: 5px">Book Completion Rate</h1>
+	<!-- <div class="row" > -->
+			<canvas style="width: 100%; background-color: #11151C; border-radius: 25px;" id="myChart"></canvas>
+	<!-- </div> -->
+
+
 {% endblock %}
