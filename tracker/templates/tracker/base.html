@@ -65,13 +65,19 @@
                     },
 			    }],
 			    xAxes: [{
-			      gridLines: {
-			        display: 'false'
-			      },
-			      ticks: {
+			    	type: 'time',
+			    	time: {
+	                    displayFormats: {
+	                        quarter: 'MMM YYYY'
+	                    }
+	                },
+			      	gridLines: {
+			        	display: 'false'
+			      	},
+			      	ticks: {
                                fontColor: "white",
                            },
-			      scaleLabel: {   // To format the scale Lebel
+			      	scaleLabel: {   // To format the scale Lebel
                                 display: false
                             },
 			    }]
