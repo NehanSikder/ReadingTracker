@@ -13,8 +13,6 @@
   position: relative">
 	
 	<div class="container" style="width: 100%; text-align: center; ">
-		{% block scripts %}
-    	{% endblock scripts %}
 		{% block content %}
     	{% endblock content %}
 	</div>
@@ -23,124 +21,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
-	<script type="text/javascript">
-	const ctx = document.getElementById('completedChart').getContext('2d');
-
-	// get this array from django
-	const count = [2,4,4,2,1,3];
-	const countLength = count.length;
-	//get this array from django
-	const monthStr =  [ "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01","2020-05-01","2020-06-01"];
-	const monthArr = [];
-	const dataArr = [];
-	for (var i = 0; i < countLength; i++) {
-		const dateObj = new Date(monthStr[i]);
-    	const dataObj = {
-    		x: dateObj,
-    		y: count[i]
-    	}
-    	monthArr.push(dateObj);
-    	dataArr.push(dataObj);
-	}
-
-
-	var chart = new Chart(ctx, {
-	    type: 'line',
-	    data: {
-    		labels: monthArr,
-	        datasets: [{
-            	backgroundColor: 'rgba(122, 199, 79, 0.2)',
-            	borderColor: 'rgba(122, 199, 79, 1.0)',
-            	data: dataArr
-	        }]
-	    },
-
-	    // Configuration options go here
-	    options: {
-	    	elements: {
-		        line: {
-		            tension: 0
-		        }
-		    },
-	    	legend: {
-	            display: false,
-	        },
-	    	layout: {
-	            padding: {
-	                left: 0,
-	                right: 25,
-	                top: 25,
-	                bottom: 0
-	            },
-	        },
-	        scales: {
-			    yAxes: [{
-			      gridLines: {
-			        display: 'false'
-			      },
-			      ticks: {
-                               fontColor: "white",
-                           },
-			      scaleLabel: {   // To format the scale Lebel
-                    display: true,
-                    labelString: '# of Books',
-                    fontColor:'#ffffff',
-                    fontSize:20
-                    },
-			    }],
-			    xAxes: [{
-			    	type: 'time',
-			    	distribution: 'series',
-			    	time: {
-	                    displayFormats: {
-	                        quarter: 'MMM YYYY'
-	                    }
-	                },
-			      	gridLines: {
-			        	display: 'false'
-			      	},
-			      	ticks: {
-                               fontColor: "white",
-                           },
-			      	scaleLabel: {   // To format the scale Lebel
-                                display: false
-                            },
-			    }]
-		  	}
-	    }
-	});
-	</script>
-	<script type="text/javascript">
-	const ctxTodoChart = document.getElementById('todoChart').getContext('2d');
-
-	//GET THIS FROM DJANGO
-	const dataArrTodoChart = [2478,5267];
-	const data = {
-      labels: ["Completed", "Todo"],
-      datasets: [
-        {
-          label: "Total Books Completed vs Todo",
-          borderColor: ['rgba(122, 199, 79, 1.0)', 'rgba(228, 87, 46, 1.0)'],
-          // 228, 87, 46
-          backgroundColor: ['rgba(122, 199, 79, 0.2)', 'rgba(228, 87, 46, 0.2)'],
-          data: dataArrTodoChart
-        }
-      ]
-    }
-
-    options =  {
-      title: {
-        display: true,
-        text: 'Total Books Completed vs Todo'
-      }
-    }
-
-	new Chart(ctxTodoChart, {
-    	type: 'doughnut',
-    	data: data,
-    	options: options
-	});
-
-	</script>
+	{% block scripts %}
+    {% endblock scripts %}
 </body>
 </html>

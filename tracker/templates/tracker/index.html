@@ -1,4 +1,142 @@
 {% extends 'tracker/base.html' %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	const ctx = document.getElementById('completedChart').getContext('2d');
+	// get this array from django
+	const count = [2,4,4,2,1,3];
+	const countLength = count.length;
+	//get this array from django
+	const monthStr =  [ "2020-01-01", "2020-02-01", "2020-03-01", "2020-04-01","2020-05-01","2020-06-01"];
+	const monthArr = [];
+	const dataArr = [];
+	for (var i = 0; i < countLength; i++) {
+		const dateObj = new Date(monthStr[i]);
+    	const dataObj = {
+    		x: dateObj,
+    		y: count[i]
+    	}
+    	monthArr.push(dateObj);
+    	dataArr.push(dataObj);
+	}
+	var chart = new Chart(ctx, {
+	    type: 'line',
+	    data: {
+    		labels: monthArr,
+	        datasets: [{
+            	backgroundColor: 'rgba(122, 199, 79, 0.2)',
+            	borderColor: 'rgba(122, 199, 79, 1.0)',
+            	data: dataArr
+	        }]
+	    },
+
+	    // Configuration options go here
+	    options: {
+	    	title: {
+		        display: true,
+		        text: 'Books Completed Per Month',
+		        fontColor: 'white'
+	      	},
+	    	elements: {
+		        line: {
+		            tension: 0
+		        }
+		    },
+	    	legend: {
+	            display: false,
+	        },
+	    	layout: {
+	            padding: {
+	                left: 0,
+	                right: 25,
+	                top: 0,
+	                bottom: 0
+	            },
+	        },
+	        scales: {
+			    yAxes: [{
+			      gridLines: {
+			        display: 'false'
+			      },
+			      ticks: {
+                               fontColor: "white",
+                           },
+			      scaleLabel: {   // To format the scale Lebel
+                    display: true,
+                    labelString: '# of Books',
+                    fontColor:'#ffffff'
+                    },
+			    }],
+			    xAxes: [{
+			    	type: 'time',
+			    	distribution: 'series',
+			    	time: {
+	                    displayFormats: {
+	                        quarter: 'MMM YYYY'
+	                    }
+	                },
+			      	gridLines: {
+			        	display: 'false'
+			      	},
+			      	ticks: {
+                               fontColor: "white",
+                           },
+			      	scaleLabel: {   // To format the scale Lebel
+                                display: false
+                            },
+			    }],
+		  	}
+	    }
+	});
+	
+	const ctxTodoChart = document.getElementById('todoChart').getContext('2d');
+
+	//GET THIS FROM DJANGO
+	const dataArrTodoChart = [parseInt("{{book_list_completed_number}}"), parseInt("{{book_list_remaining_number}}")];
+	const data = {
+      labels: ["Completed", "Remaining"],
+      datasets: [
+        {
+          label: "Total Books Completed vs Remaining",
+          borderColor: ['rgba(122, 199, 79, 1.0)', 'rgba(228, 87, 46, 1.0)'],
+          // 228, 87, 46
+          backgroundColor: ['rgba(122, 199, 79, 0.2)', 'rgba(228, 87, 46, 0.2)'],
+          data: dataArrTodoChart
+        }
+      ]
+    }
+
+    options =  {
+      title: {
+        display: true,
+        text: 'Total Books Completed vs Still To Read',
+        fontColor: 'white'
+      },
+      layout: {
+	            padding: {
+	                left: 0,
+	                right: 50,
+	                top: 5,
+	                bottom: 5
+	            },
+	        },
+      legend: {
+            display: true,
+		    position: "left"
+        }
+    }
+
+	new Chart(ctxTodoChart, {
+    	type: 'doughnut',
+    	data: data,
+    	options: options
+	});
+	
+});
+</script>
+{% endblock scripts %}
+
 {% block content %}
 	<h1 class=".display-4" id="welcome-message"  style="color: white; padding-top: 5px">Welcome {{ username }}</h1>
 	<a id="home" class="btn btn-outline-light" href="/">Home</a>
@@ -17,17 +155,15 @@
 			<h5 class=".display-4" style="color: white;">Books Already Read</h5>
 	    	<div class="card">
 				<div class="card-body">
-					{% if book_list %}
+					{% if book_list_completed %}
 						<div>
 							<ul class="list-group list-group-flush">
-						    {% for book in book_list %}
-						    	{% if book.already_read %}
+						    {% for book in book_list_completed %}
 						        	<li class="list-group-item">
 						        		{{ book.name }}
 						        		<a class="text-danger" href="deleteBook/{{ book.id }}"><i class="far fa-trash-alt"></i></a>
 						        		<a class="text-success" href="moveBook/{{ book.id }}">To Read</a>
 						        	</li>
-						    	{% endif %}
 						    {% endfor %}
 						    </ul>
 						</div>
@@ -41,16 +177,14 @@
 	    	<h5 class=".display-4" style="color: white;">Books To Read</h5>
 	    	<div class="card">
 				<div class="card-body">
-					{% if book_list %}
+					{% if book_list_remaining %}
 						<div>
 							<ul class="list-group list-group-flush">
-						    {% for book in book_list %}
-						    	{% if book.already_read == False %}
+						    {% for book in book_list_remaining %}
 						        	<li class="list-group-item">{{ book.name }}
 						        		<a class="text-danger" href="deleteBook/{{ book.id }}"><i class="far fa-trash-alt"></i></a>
 					        			<a class="text-success" href="moveBook/{{ book.id }}">Completed Reading</a>
 						        	</li>
-						    	{% endif %}
 						    {% endfor %}
 						    </ul>
 						</div>
@@ -64,10 +198,10 @@
 	<h1 class=".display-4" id="dashboard-message"  style="color: white; padding-top: 5px">Dashboard</h1>
 	<div class="row">
 		<div class="col-sm-6" >
-			<canvas style="width: 100%; background-color: #11151C; border-radius: 25px;" id="completedChart"></canvas>
+			<canvas style="width: 100%; background-color: #11151C; border-radius: 20px;" id="completedChart"></canvas>
 		</div>
 		<div class="col-sm-6" >
-			<canvas style="width: 100%; background-color: #11151C; border-radius: 25px;" id="todoChart"></canvas>
+			<canvas style="width: 100%; background-color: #11151C; border-radius: 20px;" id="todoChart"></canvas>
 		</div>
 	</div>
 

@@ -16,9 +16,20 @@ def index(request):
 	if request.user.is_authenticated:
 		username = request.user.get_username()
 	book_list = Book.objects.all().filter(user=username)
+	# interate through book_list and create subset
+	book_list_completed = []
+	book_list_remaining = []
+	for book in book_list:
+		if book.already_read:
+			book_list_completed.append(book)
+		else:
+			book_list_remaining.append(book)
 	form = BookForm()
 	context = {
-		'book_list' : book_list,
+		'book_list_completed' : book_list_completed,
+		'book_list_remaining' : book_list_remaining, 
+		'book_list_completed_number' : len(book_list_completed),
+		'book_list_remaining_number' : len(book_list_remaining), 
 		'form' : form,
 		'username' : username,
 	}
