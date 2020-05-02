@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from .models import Book
 from .forms import BookForm
 
+from datetime import datetime
+import json
 
 # Create your views here.
 @login_required
@@ -19,8 +21,17 @@ def index(request):
 	# interate through book_list and create subset
 	book_list_completed = []
 	book_list_remaining = []
+	books_completed_per_month = {}
 	for book in book_list:
 		if book.already_read:
+			if book.completed_date_time:
+				date_str = book.completed_date_time.strftime("%Y-%m-%d")
+				count = books_completed_per_month.get(date_str)
+				if count:
+					count = count+1
+					books_completed_per_month[date_str] = count
+				else:
+					books_completed_per_month[date_str] = 1
 			book_list_completed.append(book)
 		else:
 			book_list_remaining.append(book)
@@ -30,6 +41,8 @@ def index(request):
 		'book_list_remaining' : book_list_remaining, 
 		'book_list_completed_number' : len(book_list_completed),
 		'book_list_remaining_number' : len(book_list_remaining), 
+		'book_completed_months': json.dumps(list(books_completed_per_month.keys())),
+		'book_completed_count': json.dumps(list(books_completed_per_month.values())),
 		'form' : form,
 		'username' : username,
 	}
@@ -75,6 +88,10 @@ def deleteBook(request,pk):
 def moveBook(request,pk):
 	book = Book.objects.get(pk=pk)
 	book.already_read = not book.already_read
+	if book.already_read:
+		book.completed_date_time = datetime.now()
+	else:
+		book.completed_date_time = None
 	book.save()
 	return redirect('tracker:index')
 
