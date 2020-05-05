@@ -17,7 +17,7 @@ def index(request):
 	username = None
 	if request.user.is_authenticated:
 		username = request.user.get_username()
-	book_list = Book.objects.all().filter(user=username)
+	book_list = Book.objects.all().filter(user=username).order_by('completed_date_time')
 	# interate through book_list and create subset
 	book_list_completed = []
 	book_list_remaining = []

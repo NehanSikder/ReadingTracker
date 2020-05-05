@@ -9,8 +9,6 @@ $(document).ready(function(){
 	const countLength = count.length;
 	//get this array from django
 	const monthStr =  {{book_completed_months|safe }};
-	console.log(count);
-	console.log(monthStr);
 	const monthArr = [];
 	const dataArr = [];
 	for (var i = 0; i < countLength; i++) {
@@ -162,8 +160,7 @@ $(document).ready(function(){
 						<div>
 							<ul class="list-group list-group-flush">
 						    {% for book in book_list_completed %}
-						        	<li class="list-group-item">
-						        		{{ book.name }}
+						        	<li id="{{book.name|cut:" " }}" class="list-group-item">{{ book.name }}
 						        		<a class="text-danger" href="deleteBook/{{ book.id }}"><i class="far fa-trash-alt"></i></a>
 						        		<a class="text-success" href="moveBook/{{ book.id }}">To Read</a>
 						        	</li>
@@ -184,7 +181,7 @@ $(document).ready(function(){
 						<div>
 							<ul class="list-group list-group-flush">
 						    {% for book in book_list_remaining %}
-						        	<li class="list-group-item">{{ book.name }}
+						        	<li id="{{book.name|cut:" " }}" class="list-group-item">{{ book.name }}
 						        		<a class="text-danger" href="deleteBook/{{ book.id }}"><i class="far fa-trash-alt"></i></a>
 					        			<a class="text-success" href="moveBook/{{ book.id }}">Completed Reading</a>
 						        	</li>
