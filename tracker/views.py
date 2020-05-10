@@ -17,7 +17,7 @@ def index(request):
 	username = None
 	if request.user.is_authenticated:
 		username = request.user.get_username()
-	book_list = Book.objects.all().filter(user=username).order_by('completed_date_time')
+	book_list = Book.objects.all().filter(user=username).order_by('-completed_date_time')
 	# interate through book_list and create subset
 	book_list_completed = []
 	book_list_remaining = []
@@ -47,6 +47,42 @@ def index(request):
 		'username' : username,
 	}
 	return render(request, 'tracker/index.html', context)
+
+@login_required
+def showBooks(request):
+	username = None
+	if request.user.is_authenticated:
+		username = request.user.get_username()
+	book_list = Book.objects.all().filter(user=username).order_by('-completed_date_time')
+	# interate through book_list and create subset
+	book_list_completed = []
+	book_list_remaining = []
+	books_completed_per_month = {}
+	for book in book_list:
+		if book.already_read:
+			if book.completed_date_time:
+				date_str = book.completed_date_time.strftime("%Y-%m-%d")
+				count = books_completed_per_month.get(date_str)
+				if count:
+					count = count+1
+					books_completed_per_month[date_str] = count
+				else:
+					books_completed_per_month[date_str] = 1
+			book_list_completed.append(book)
+		else:
+			book_list_remaining.append(book)
+	form = BookForm()
+	context = {
+		'book_list_completed' : book_list_completed,
+		'book_list_remaining' : book_list_remaining, 
+		'book_list_completed_number' : len(book_list_completed),
+		'book_list_remaining_number' : len(book_list_remaining), 
+		'book_completed_months': json.dumps(list(books_completed_per_month.keys())),
+		'book_completed_count': json.dumps(list(books_completed_per_month.values())),
+		'form' : form,
+		'username' : username,
+	}
+	return render(request, 'tracker/books.html', context)
 
 @login_required
 def deleteAccount(request):
