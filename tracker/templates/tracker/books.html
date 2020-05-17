@@ -1,0 +1,61 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+	<h1 class=".display-4" id="welcome-message"  style="color: white; padding-top: 5px">Welcome {{ username }}</h1>
+	<a id="home" class="btn btn-outline-light" href="/">Home</a>
+	<a id="books" class="btn btn-outline-light" href="/books">Books</a>
+	<a id="profile" class="btn btn-outline-light" href="/profile">Profile</a>
+	<a id="logout" class="btn btn-outline-light" href="/accounts/logout/">Log Out</a>
+    	<form action="{% url 'tracker:addBook' %}" method="post">
+    		 <div class="d-flex" style="padding: 5px;">
+		    	{% csrf_token %}
+		        {{ form.name }}	
+				<input type="submit" id="add_book_btn" class="btn btn-success" value="Add">
+		    </div>
+		</form>
+	<div class="row" style="padding: 5px;">
+	    <div class="col-sm" >
+	    	
+			<h5 class=".display-4" style="color: white;">Books Already Read</h5>
+	    	<div class="card">
+				<div class="card-body">
+					{% if book_list_completed %}
+						<div>
+							<ul class="list-group list-group-flush">
+						    {% for book in book_list_completed %}
+						        	<li id="{{book.name|cut:" " }}" class="list-group-item">{{ book.name }}
+						        		<a class="text-danger" href="{% url 'tracker:deleteBook' book.id %}"><i class="far fa-trash-alt"></i></a>
+						        		<a class="text-success" href="{% url 'tracker:moveBook' book.id %}">To Read</a>
+						        	</li>
+						    {% endfor %}
+						    </ul>
+						</div>
+					{% else %}
+					    <p>No books have been added to track</p>
+					{% endif %}    
+				</div>
+			</div>
+	    </div>
+	    <div class="col-sm">
+	    	<h5 class=".display-4" style="color: white;">Books To Read</h5>
+	    	<div class="card">
+				<div class="card-body">
+					{% if book_list_remaining %}
+						<div>
+							<ul class="list-group list-group-flush">
+						    {% for book in book_list_remaining %}
+						        	<li id="{{book.name|cut:" " }}" class="list-group-item">{{ book.name }}
+						        		<a class="text-danger" href="{% url 'tracker:deleteBook' book.id %}"><i class="far fa-trash-alt"></i></a>
+					        			<a class="text-success" href="{% url 'tracker:moveBook' book.id %}">Completed Reading</a>
+						        	</li>
+						    {% endfor %}
+						    </ul>
+						</div>
+					{% else %}
+					    <p>No books have been added to track</p>
+					{% endif %}    
+				</div>
+			</div>
+	    </div>
+	</div>
+{% endblock %}
