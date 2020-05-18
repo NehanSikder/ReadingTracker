@@ -1,9 +1,9 @@
-language: python
-python:
-  - "3.6"
-# command to install dependencies
-install:
-  - pip install -r requirements.txt
-# Command to start server
-script:
-  - python3 manage.py runserver
+language: java
+jdk:
+  - oraclejdk8
+python: "3.6"
+install: "pip install -r requirements.txt"
+before_script: python3 manage.py runserver 
+script: 
+  - "cd uitests/"
+  - "mvn test"
