@@ -5,7 +5,7 @@ dist: xenial
 addons:
   chrome: stable
 before_install:
-  - "google-chrome --version"
+  - "google-chrome-stable --version"
   - "source ~/virtualenv/python3.6/bin/activate"
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 install: "pip3 install -r requirements.txt"
