@@ -20,7 +20,7 @@ public class LoginStepDefinition {
 
     @Given("I navigate to localhost")
     public void i_navigate_to_localhost() {
-        driver.get("http://127.0.0.1:8000/");
+        driver.get("http://localhost:8000/");
     }
 
     @When("I enter test user name and test password")
@@ -39,7 +39,6 @@ public class LoginStepDefinition {
     @After
     public void tear_down(){
         driver.close();
-
     }
 
 
