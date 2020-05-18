@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,7 +18,9 @@ public class LoginStepDefinition {
     public void set_up(){
         String path = System.getProperty("user.dir");
         System.setProperty("webdriver.chrome.driver", path+"/chromedriver");
-        driver= new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200","--ignore-certificate-errors");
+        driver= new ChromeDriver(options);
     }
 
     @Given("I navigate to localhost")
