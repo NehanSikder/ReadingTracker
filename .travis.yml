@@ -1,6 +1,7 @@
 language: java
-python: "3.6"
-install: "pip install -r requirements.txt"
+python: 
+  - "3.6"
+install: "pip3 install -r requirements.txt"
 before_script: python3 manage.py runserver 
 script: 
   - "cd uitests/"
