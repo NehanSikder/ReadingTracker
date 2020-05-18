@@ -15,6 +15,8 @@ public class LoginStepDefinition {
 
     @Before
     public void set_up(){
+        String path = System.getProperty("user.dir");
+        System.setProperty("webdriver.chrome.driver", path+"/lib/chromedriver");
         driver= new ChromeDriver();
     }
 
