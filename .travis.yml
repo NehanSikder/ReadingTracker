@@ -2,7 +2,7 @@ language: java
 before_install:
 - "source ~/virtualenv/python3.6/bin/activate"
 install: "pip install -r requirements.txt"
-before_script: python3 manage.py runserver 
 script: 
+  - "nohup python3 manage.py runserver &"
   - "cd uitests/"
   - "mvn test"
