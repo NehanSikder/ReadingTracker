@@ -10,6 +10,6 @@ before_install:
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 install: "pip3 install -r requirements.txt"
 script: 
-  - "nohup manage.py runserver &"
+  - "nohup python3 manage.py runserver &"
   - "cd uitests/"
   - "mvn test"
